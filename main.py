@@ -1,4 +1,6 @@
 from flask import Flask
+from utils import load_json_data, build_preformatted_list
+
 
 #
 # # This is a sample Python script.
@@ -13,25 +15,38 @@ from flask import Flask
 #
 #
 # # Press the green button in the gutter to run the script.
-# if __name__ == '__main__':
-#     print_hi('PyCharm')
-#
+
 # # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 
-app = Flask(__name__)
-@app.route("/")
-def page_index():
-    return "I'm first page"
+def run_app():
+    """This function starts the flask app"""
+    app = Flask(__name__)
+    candidates = load_json_data()
+    print(candidates)
+    str1 = build_preformatted_list(candidates)
+    print(str1)
 
-@app.route("/catalog/<uid>")
-def page_catalog(uid):
-    """test"""
-    # return f"I'm catalog page {uid}"
-    return page_catalog.__doc__
+    @app.route("/")
+    def page_index():
+        # print(candidates)
+        # str1 = build_preformatted_list(candidates)
+        # print(str1)
+        return str1
 
-def page_user(uid):
-    return f"I am user page{uid}"
+    @app.route("/catalog/<uid>")
+    def page_catalog(uid):
+        """test"""
+        # return f"I'm catalog page {uid}"
+        return page_catalog.__doc__
 
-app.add_url_rule("/user/<uid>", view_func=page_user)
+    def page_user(uid):
+        return f"I am user page{uid}"
 
-app.run()
+    app.add_url_rule("/user/<uid>", view_func=page_user)
+
+    # app.run()
+    app.run(host="127.0.0.5", port="5001")
+
+
+if __name__ == '__main__':
+    run_app()
