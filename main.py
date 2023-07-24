@@ -1,5 +1,5 @@
 from flask import Flask
-from utils import load_json_data, build_preformatted_list
+from utils import load_json_data, build_preformatted_list, get_candidate_by_id
 
 
 #
@@ -22,30 +22,28 @@ def run_app():
     """This function starts the flask app"""
     app = Flask(__name__)
     candidates = load_json_data()
-    print(candidates)
-    str1 = build_preformatted_list(candidates)
-    print(str1)
 
     @app.route("/")
     def page_index():
-        # print(candidates)
-        # str1 = build_preformatted_list(candidates)
-        # print(str1)
-        return str1
+        return build_preformatted_list(candidates)
 
-    @app.route("/catalog/<uid>")
-    def page_catalog(uid):
+    @app.route("/candidate/<int:uid>")
+    def page_candidate_by_id(uid):
         """test"""
-        # return f"I'm catalog page {uid}"
-        return page_catalog.__doc__
+        for human in candidates:
+            if human["id"] == uid:
+                return get_candidate_by_id(human)
 
-    def page_user(uid):
+    def page_skill(uid):
+        for human in candidates:
+            if human["skills"] == uid:
+                return get_candidate_by_id(human)
         return f"I am user page{uid}"
 
-    app.add_url_rule("/user/<uid>", view_func=page_user)
+    app.add_url_rule("/skill/<uid>", view_func=page_skill)
 
     # app.run()
-    app.run(host="127.0.0.5", port="5001")
+    app.run(host="127.0.0.4", port="5001")
 
 
 if __name__ == '__main__':

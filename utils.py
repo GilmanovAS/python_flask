@@ -15,4 +15,23 @@ def build_preformatted_list(candidates):
         result_str += people["name"] + "\n"
         result_str += people["position"] + "\n"
         result_str += people["skills"] + "\n" + "\n"
-    return  "<pre>" + result_str +"</pre>"
+    return "<pre>" + result_str + "</pre>"
+
+
+def build_preformatted_list(candidates):
+    """"""
+    result_str = ''
+    for people in candidates:
+        result_str += people["name"] + "\n"
+        result_str += people["position"] + "\n"
+        result_str += people["skills"] + "\n" + "\n"
+    return "<pre>" + result_str + "</pre>"
+
+
+def get_candidate_by_id(candidate):
+    result_str = f'<img src ="{candidate["picture"]}">\n'
+    result_str += "<pre>"
+    result_str += candidate["name"] + "\n"
+    result_str += candidate["position"] + "\n"
+    result_str += candidate["skills"] + "\n" + "\n"
+    return result_str + "</pre>"
