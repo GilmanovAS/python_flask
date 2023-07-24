@@ -1,5 +1,7 @@
+"""It is util file"""
 from flask import Flask
-from utils import load_json_data, build_preformatted_list, get_candidate_by_id
+
+from utils import load_json_data, build_preformatted_list, get_candidate_by_id, get_candidate_by_skill
 
 
 #
@@ -35,16 +37,19 @@ def run_app():
                 return get_candidate_by_id(human)
 
     def page_skill(uid):
+        result_test = ''
         for human in candidates:
-            if human["skills"] == uid:
-                return get_candidate_by_id(human)
-        return f"I am user page{uid}"
+            if uid.lower() in human["skills"].lower():
+                result_test += get_candidate_by_skill(human)
+        return result_test
 
     app.add_url_rule("/skill/<uid>", view_func=page_skill)
 
     # app.run()
     app.run(host="127.0.0.4", port="5001")
 
+print(__name__)
+print(__doc__)
 
 if __name__ == '__main__':
     run_app()

@@ -1,4 +1,6 @@
+"""It is util file"""
 import json
+
 from config import PATH
 
 
@@ -8,30 +10,31 @@ def load_json_data():
         return json.load(fp)
 
 
-def build_preformatted_list(candidates):
-    """"""
-    result_str = ''
-    for people in candidates:
-        result_str += people["name"] + "\n"
-        result_str += people["position"] + "\n"
-        result_str += people["skills"] + "\n" + "\n"
-    return "<pre>" + result_str + "</pre>"
+def html_format(candidate):
+    str = ''
+    str += "<pre>"
+    str += candidate["name"] + "\n"
+    str += candidate["position"] + "\n"
+    str += candidate["skills"] + "\n" + "</pre>" + "\n"
+    return str
 
 
 def build_preformatted_list(candidates):
-    """"""
-    result_str = ''
+    """ """
+    result_str = ""
     for people in candidates:
-        result_str += people["name"] + "\n"
-        result_str += people["position"] + "\n"
-        result_str += people["skills"] + "\n" + "\n"
-    return "<pre>" + result_str + "</pre>"
+        result_str += html_format(people)
+    return result_str
 
 
 def get_candidate_by_id(candidate):
     result_str = f'<img src ="{candidate["picture"]}">\n'
-    result_str += "<pre>"
-    result_str += candidate["name"] + "\n"
-    result_str += candidate["position"] + "\n"
-    result_str += candidate["skills"] + "\n" + "\n"
-    return result_str + "</pre>"
+    result_str += html_format(candidate)
+    return result_str
+
+
+def get_candidate_by_skill(candidate):
+    return html_format(candidate)
+
+print(__name__)
+print(__doc__)
